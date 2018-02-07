@@ -1,0 +1,21 @@
+{
+    "name": "mindkomm/theme-lib-script-loader-tags",
+    "type": "library",
+    "description": "Async and defer attribute helper tags for enqueueing scripts in WordPress themes",
+    "license": "MIT",
+    "require": {
+      "php": ">=7.0.0"
+    },
+    "autoload": {
+      "files": [
+        "autoload.php"
+      ]
+    },
+    "authors": [
+        {
+            "name": "Lukas Gaechter",
+            "email": "lukas.gaechter@mind.ch",
+            "homepage": "https://www.mind.ch"
+        }
+    ]
+}
