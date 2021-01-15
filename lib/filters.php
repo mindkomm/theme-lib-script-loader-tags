@@ -9,14 +9,21 @@
  * @since 1.0.0
  */
 add_filter( 'script_loader_tag', function( $tag, $handle, $src ) {
-	// Look for '--async'
-	if ( strpos( $handle, '--async' ) > -1 ) {
-		$tag = str_replace( ' src', ' async src', $tag );
-	}
+	$pipes = [
+		'|async'    => 'async',
+		'|defer'    => 'defer',
+		'|module'   => 'type="module"',
+		'|nomodule' => 'nomodule',
+		// Deprecated.
+		'--async'    => 'async',
+		'--defer'    => 'async',
+	];
 
-	// Look for '--defer'
-	if ( strpos( $handle, '--defer' ) > -1 ) {
-		$tag = str_replace( ' src', ' defer src', $tag );
+	foreach ( $pipes as $pipe => $value ) {
+		if ( strpos( $handle, $pipe ) > -1 ) {
+			$tag = str_replace( $pipe, '', $tag );
+			$tag = str_replace( ' src', " {$value} src", $tag );
+		}
 	}
 
 	return $tag;
