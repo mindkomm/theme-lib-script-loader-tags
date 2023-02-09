@@ -3,7 +3,7 @@
 /**
  * Filter script tags for async or defer attributes.
  *
- * Append '--async' or/and '--defer' to your script handle to add the appropriate tags to the script tag.
+ * Append '|async' or/and '|defer' to your script handle to add the appropriate tags to the script tag.
  * This is inspired by: https://matthewhorne.me/defer-async-wordpress-scripts/.
  *
  * @since 1.0.0
