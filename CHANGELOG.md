@@ -1,5 +1,9 @@
 # Script Loader Tags
 
+## 1.2.1 - 2023-02-09
+
+- Fixed a bug when multiple calls to `update_script_tag()` could cause attributes to be added multiple times.
+
 ## 1.2.0 - 2020-01-15
 
 - Added possibility for `nomodule` and `type="module"` attributes.

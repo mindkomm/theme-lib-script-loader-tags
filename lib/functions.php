@@ -14,36 +14,47 @@ function update_script_tag( $handle = [], $add = [] ) {
 	$handle = (array) $handle;
 	$add    = (array) $add;
 
-	$additions = '';
+	$attributes = [];
 
 	foreach ( $add as $type ) {
 		switch ( $type ) {
 			case 'async':
-				$additions .= ' async';
+				$attributes[] = 'async';
 				break;
 			case 'defer':
-				$additions .= ' defer';
+				$attributes[] = 'defer';
 				break;
 			case 'module':
-				$additions .= ' type="module"';
+				$attributes[] = 'type="module"';
 				break;
 			case 'nomodule':
-				$additions .= ' nomodule';
+				$attributes[] = 'nomodule';
 				break;
 		}
 	}
 
-	if ( empty( $additions ) ) {
+	if ( empty( $attributes ) ) {
 		return;
 	}
 
-	$filter = function( $tag, $current_handle ) use ( $handle, $additions ) {
+	$filter = function( $tag, $current_handle ) use ( $handle, $attributes ) {
 		// Bailout if the handle does not apply.
 		if ( ! in_array( $current_handle, $handle, true ) ) {
 			return $tag;
 		}
 
-		return str_replace( ' src', sprintf( ' %s src', trim( $additions ) ), $tag );
+		// Remove existing attributes from attributes array if they are already set on a tag.
+		foreach ( $attributes as $key => $attribute ) {
+			if ( preg_match( "/\s{$attribute}[\s>]/", $tag ) ) {
+				unset( $attributes[ $key ] );
+			}
+		}
+
+		if ( empty( $attributes ) ) {
+			return $tag;
+		}
+
+		return str_replace( ' src', sprintf( ' %s src', join( ' ', $attributes ) ), $tag );
 	};
 
 	add_filter( 'script_loader_tag', $filter, 10, 2 );
